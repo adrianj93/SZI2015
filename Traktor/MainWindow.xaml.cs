@@ -23,6 +23,9 @@ namespace Traktor
 		public MainWindow()
 		{
 			InitializeComponent();
+			Traktor_agent traktorek = new Traktor_agent(25, 100);
+
 		}
+
 	}
 }

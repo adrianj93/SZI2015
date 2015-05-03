@@ -2,8 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:src="clr-namespace:Traktor"
+        xmlns:resources="clr-namespace:Traktor.Resources"
         Title="MainWindow"
-		MinHeight="650" MinWidth="750" Height="650" Width="750"
+		MinHeight="650" MinWidth="780" Height="650" Width="780"
                            WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
                            ResizeMode="CanResizeWithGrip" Icon="UI/app_icon.png" MouseDown="Window_MouseDown">
 	<Border BorderBrush="#FF367FFF" BorderThickness="1">
@@ -55,6 +56,9 @@
 								</LinearGradientBrush>
 							</Grid.Background>
 						</Grid>
+
+						<resources:Board HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5"/>
+
 					</Grid>
 					
 					<Grid Style="{StaticResource Grid_MetroAnim}" x:Name="Grid_Taskbar"
@@ -68,6 +72,10 @@
 									<GradientStop Color="#00253344" Offset="1" />
 								</LinearGradientBrush>
 							</Grid.Background>
+							<StackPanel Orientation="Vertical">
+								<Label>Poziom paliwa</Label>
+								<ProgressBar Maximum="100" SmallChange="1" Value="25" Height="25"  />
+							</StackPanel>
 						</Grid>
 					</Grid>
 				</StackPanel>
