@@ -1,0 +1,16 @@
+c:\users\adrian\documents\visual studio 2013\Projects\Traktor\Traktor\bin\Debug\Traktor.exe.config
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\MainWindow.g.cs
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\App.g.cs
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\Traktor_MarkupCompile.cache
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\Traktor_MarkupCompile.lref
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\bin\Debug\Traktor.exe
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\bin\Debug\Traktor.pdb
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\MainWindow.baml
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\Traktor.g.resources
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\Traktor.Properties.Resources.resources
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\Traktor.csproj.GenerateResource.Cache
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\Traktor.exe
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\Traktor.pdb
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\App.baml
+C:\Users\Adrian\Documents\Visual Studio 2013\Projects\Traktor\Traktor\obj\Debug\Resources\NamesDictionary.baml
