@@ -72,11 +72,12 @@
 									<GradientStop Color="#00253344" Offset="1" />
 								</LinearGradientBrush>
 							</Grid.Background>
-							<StackPanel Orientation="Vertical">
-								<Label>Poziom paliwa</Label>
-								<ProgressBar Maximum="100" SmallChange="1" Value="25" Height="25"  />
-							</StackPanel>
+
 						</Grid>
+						<StackPanel Orientation="Vertical" Height="500">
+							<Label>Poziom paliwa</Label>
+
+						</StackPanel>
 					</Grid>
 				</StackPanel>
 

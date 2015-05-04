@@ -33,3 +33,22 @@ C:\Users\Adrian\Documents\Visual Studio 2013\Projects\SZI2015\Traktor\obj\Debug\
 C:\Users\Adrian\Documents\Visual Studio 2013\Projects\SZI2015\Traktor\obj\Debug\Traktor.csproj.GenerateResource.Cache
 C:\Users\Adrian\Documents\Visual Studio 2013\Projects\SZI2015\Traktor\obj\Debug\Resources\Board.g.cs
 C:\Users\Adrian\Documents\Visual Studio 2013\Projects\SZI2015\Traktor\obj\Debug\Resources\Board.baml
+\\files\students\s383959\Desktop\SZI2015\Traktor\bin\Debug\Traktor.exe.config
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Traktor.exe
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Traktor.pdb
+\\files\students\s383959\Desktop\SZI2015\Traktor\bin\Debug\Traktor.exe
+\\files\students\s383959\Desktop\SZI2015\Traktor\bin\Debug\Traktor.pdb
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Traktor.csprojResolveAssemblyReference.cache
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Resources\NamesDictionary.baml
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\App.baml
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\MainWindow.g.cs
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Resources\Board.g.cs
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\App.g.cs
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\GeneratedInternalTypeHelper.g.cs
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Traktor_MarkupCompile.cache
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Traktor_MarkupCompile.lref
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\MainWindow.baml
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Resources\Board.baml
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Traktor.g.resources
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Traktor.Properties.Resources.resources
+\\files\students\s383959\Desktop\SZI2015\Traktor\obj\Debug\Traktor.csproj.GenerateResource.Cache
