@@ -23,9 +23,15 @@ namespace Traktor
 		public MainWindow()
 		{
 			InitializeComponent();
-			Traktor_agent traktorek = new Traktor_agent(25, 100);
-
+			
+            PoleCollection plansza = new PoleCollection(10);
+            Traktor_agent traktorek = new Traktor_agent(25, 100, plansza);
 		}
+
+        private void GoToButt_Click(object sender, RoutedEventArgs e)
+        {
+            //traktorek.goTo(int.Parse(GoToX.Text), int.Parse(GoToY.Text));
+        }
 
 	}
 }

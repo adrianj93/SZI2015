@@ -76,8 +76,15 @@
 						</Grid>
 						<StackPanel Orientation="Vertical" Height="500">
 							<Label>Poziom paliwa</Label>
+                            <Label>Pozycja Traktora:</Label>
+                            <Label x:Name="TraktorPositionX"></Label>
+                            <Label x:Name="TraktorPositionY"></Label>
+                            <Label>Jedź do:</Label>
+                            <TextBox x:Name="GoToX" Margin="5">x</TextBox>
+                            <TextBox x:Name="GoToY" Margin="5">y</TextBox>
+                            <Button x:Name="GoToButt" Content="Jedź!" Click="GoToButt_Click" Margin="5"></Button>
 
-						</StackPanel>
+                        </StackPanel>
 					</Grid>
 				</StackPanel>
 
