@@ -20,17 +20,18 @@ namespace Traktor
 	/// </summary>
 	public partial class MainWindow : ApplicationWindowBase
 	{
+        public Traktor_agent traktorek { get; private set; }
 		public MainWindow()
 		{
 			InitializeComponent();
 			
             PoleCollection plansza = new PoleCollection(10);
-            Traktor_agent traktorek = new Traktor_agent(25, 100, plansza);
+            this.traktorek = new Traktor_agent(25, 100, plansza);
 		}
 
         private void GoToButt_Click(object sender, RoutedEventArgs e)
         {
-            //traktorek.goTo(int.Parse(GoToX.Text), int.Parse(GoToY.Text));
+            this.traktorek.goTo(int.Parse(GoToX.Text), int.Parse(GoToY.Text));
         }
 
 	}

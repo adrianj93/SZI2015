@@ -7,7 +7,7 @@ using Traktor.Resources;
 
 namespace Traktor
 {
-	class Traktor_agent
+	public class Traktor_agent
 	{
 		private int paliwo_poziom;
 		private int paliwo_max;
@@ -73,33 +73,32 @@ namespace Traktor
         public Pole[] AGwiazdka (int x, int y)
         {
             Pole PoleX = new Pole(-1,-1,1000);
+            Pole[] trasa = new Pole[100];
             int tentGScore;
             bool tentIsBetter;
             Pole[,] cameFrom = new Pole[10, 10];
-            cameFrom = null;
             List<Pole> closedSet = new List<Pole>();
             List<Pole> openset = new List<Pole>();
             List<Pole> xNeighbor = new List<Pole>();
             openset.Add(this.pozycja);
             int[,] gScore = new int[10, 10];
-            gScore = null;
             int[,] fScore = new int[10, 10];
-            fScore = null;
             fScore[pozycja.x, pozycja.y] = 0;
             int[,] hScore = new int[10, 10];
-            hScore = null;
             gScore[pozycja.x, pozycja.y] = 0;
-            while (openset.Count!=0)
+            while (openset.Count != 0)
             {
+                PoleX = openset.Find(a => a.koszt != null);
                 foreach (var p in openset)
                 {
                     if (fScore[p.x, p.y] < PoleX.koszt)
                         PoleX = p;
                 }
                 if (PoleX.x == x && PoleX.y == y)
-                    reconstructPath(cameFrom, PoleX);
+                    trasa = reconstructPath(cameFrom, PoleX);
                 openset.Remove(PoleX);
-                closedSet.Add(PoleX);
+                if (!closedSet.Contains(PoleX))
+                    closedSet.Add(PoleX);
                 xNeighbor.RemoveAll(a => a.koszt != null);
                 if (plansza.Find(a => a.x == (PoleX.x - 1) & a.y == PoleX.y) != null)
                     xNeighbor.Add(plansza.Find(a => a.x == (PoleX.x - 1) & a.y == PoleX.y));
@@ -131,32 +130,101 @@ namespace Traktor
                     }
                 }
             }
-            return null;
+            return trasa;
+            //Pole[] pusta = new Pole[1];
+            //pusta[0] = null;
+            //return pusta;
         }
 
         private Pole[] reconstructPath(Pole[,] cameFrom, Pole current)
         {
             if (cameFrom[current.x, current.y] != null)
             {
-                Pole[] p = new Pole[100];
-                p = null;
-                p = reconstructPath(cameFrom, cameFrom[current.x, current.y]);
-                for (int i = 0; i < 100; i++)
-                    if (p[i] == null)
+                Pole[] pTemp = reconstructPath(cameFrom, cameFrom[current.x, current.y]);
+                Pole[] p = new Pole[pTemp.Length + 1];
+                for (int i = 0; i < pTemp.Length + 1; i++)
+                {
+                    if (i < pTemp.Length)
+                        p[i] = pTemp[i];
+                    else
                         p[i] = current;
+                }
                 return p;
             }
             else
-                return null;
+            {
+                //return null;
+                Pole[] pusta = new Pole[1];
+                pusta[0] = null;
+                return pusta;
+            }
         }
 
         public void goTo (int x, int y)
         {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"P:\logTrasy.txt", true))
+            {
+                file.WriteLine("Log Trasy traktora:");
+            }
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"P:\logTrasy.txt", true))
+            {
+                file.WriteLine("Pozycja startowa x:" + pozycja.x.ToString() + " y:" + pozycja.y.ToString());
+            }
+
             Pole[] trasa = AGwiazdka(x, y);
             for(int i = 0; i<trasa.Length; i++)
             {
-                pozycja = trasa[i];
+                //pozycja = trasa[i];
+                if (trasa[i] == null)
+                    continue;
+                if (this.pozycja.x - 1 == trasa[i].x)
+                { 
+                    left();
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"P:\logTrasy.txt", true))
+                    { file.WriteLine("lewo " + "Pozycja x:" + pozycja.x.ToString() + " y:" + pozycja.y.ToString() + " Koszt: " + pozycja.koszt); }
+                }
+                else if (this.pozycja.x + 1 == trasa[i].x)
+                { 
+                    right();
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"P:\logTrasy.txt", true))
+                    { file.WriteLine("prawo " + "Pozycja x:" + pozycja.x.ToString() + " y:" + pozycja.y.ToString() + " Koszt: " + pozycja.koszt); }
+                }
+                else if (this.pozycja.y - 1 == trasa[i].y)
+                { 
+                    up();
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"P:\logTrasy.txt", true))
+                    { file.WriteLine("góra " + "Pozycja x:" + pozycja.x.ToString() + " y:" + pozycja.y.ToString() + " Koszt: " + pozycja.koszt); }
+                }
+                else if (this.pozycja.y + 1 == trasa[i].y)
+                { 
+                    down();
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"P:\logTrasy.txt", true))
+                    { file.WriteLine("dół " + "Pozycja x:" + pozycja.x.ToString() + " y:" + pozycja.y.ToString() + " Koszt: " + pozycja.koszt); }
+                }
             }
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"P:\logTrasy.txt", true))
+            {
+                file.WriteLine("Pozycja końcowa x:" + pozycja.x.ToString() + " y:" + pozycja.y.ToString());
+                file.WriteLine("***");
+            }
+        }
+
+        private void left()
+        {
+            this.pozycja = this.plansza.Find(a => a.x == (this.pozycja.x - 1) & a.y == this.pozycja.y);
+        }
+        private void right()
+        {
+            this.pozycja = this.plansza.Find(a => a.x == (this.pozycja.x + 1) & a.y == this.pozycja.y);
+        }
+        private void up()
+        {
+            this.pozycja = this.plansza.Find(a => a.x == this.pozycja.x & a.y == (this.pozycja.y - 1));
+        }
+        private void down()
+        {
+            this.pozycja = this.plansza.Find(a => a.x == this.pozycja.x & a.y == (this.pozycja.y + 1));
         }
 	}
 }
