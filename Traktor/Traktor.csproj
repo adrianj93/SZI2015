@@ -119,6 +119,24 @@
     <Resource Include="UI\oval_triangle.png" />
     <Resource Include="UI\settings_1616.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\1.jpg" />
+    <Resource Include="Images\2.jpg" />
+    <Resource Include="Images\3.jpg" />
+    <Resource Include="Images\4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\0.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DecisionTree\data.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DecisionTree\decisionTree.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\9.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

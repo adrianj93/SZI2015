@@ -1,0 +1,34 @@
+<tree>
+	<pora_dnia name="poludnie" value="nie">nie</pora_dnia>
+	<pora_dnia name="popoludnie" value="nie">nie</pora_dnia>
+	<pora_dnia name="rano">
+		<rodzaj_gleby name="grass">
+			<pora_roku name="jesien" value="tak">tak</pora_roku>
+			<pora_roku name="lato" value="tak">tak</pora_roku>
+			<pora_roku name="wiosna" value="tak">tak</pora_roku>
+			<pora_roku name="zima" value="nie">nie</pora_roku>
+		</rodzaj_gleby>
+		<rodzaj_gleby name="ground">
+			<pora_roku name="jesien" value="tak">tak</pora_roku>
+			<pora_roku name="lato" value="tak">tak</pora_roku>
+			<pora_roku name="wiosna" value="tak">tak</pora_roku>
+			<pora_roku name="zima" value="nie">nie</pora_roku>
+		</rodzaj_gleby>
+		<rodzaj_gleby name="weed" value="nie">nie</rodzaj_gleby>
+	</pora_dnia>
+	<pora_dnia name="wieczor">
+		<rodzaj_gleby name="grass">
+			<pora_roku name="jesien" value="tak">tak</pora_roku>
+			<pora_roku name="lato" value="tak">tak</pora_roku>
+			<pora_roku name="wiosna" value="tak">tak</pora_roku>
+			<pora_roku name="zima" value="nie">nie</pora_roku>
+		</rodzaj_gleby>
+		<rodzaj_gleby name="ground">
+			<pora_roku name="jesien" value="tak">tak</pora_roku>
+			<pora_roku name="lato" value="tak">tak</pora_roku>
+			<pora_roku name="wiosna" value="tak">tak</pora_roku>
+			<pora_roku name="zima" value="nie">nie</pora_roku>
+		</rodzaj_gleby>
+		<rodzaj_gleby name="weed" value="nie">nie</rodzaj_gleby>
+	</pora_dnia>
+</tree>

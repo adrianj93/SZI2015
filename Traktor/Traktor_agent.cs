@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using Traktor.Resources;
 
 namespace Traktor
@@ -13,9 +15,12 @@ namespace Traktor
 		private int paliwo_max;
         public Pole pozycja { get; set; }
         private List<Pole> plansza = new List<Pole>();
+        public Image image = new Image();
+        public int jednostkiNawozu=0;
 
-        //private int poz_x;
-        //private int poz_y;
+
+        public int poz_x;
+        public int poz_y;
 
         //private bool available_left = false;
         //private bool available_right = false;
@@ -27,9 +32,10 @@ namespace Traktor
 		{
 			this.paliwo_poziom = paliwo_poziom;
 			this.paliwo_max = paliwo_max;
-
-            //this.poz_x = 0;
-            //this.poz_y = 0;
+            this.image.Source = new BitmapImage(new Uri(@"\Images\0.jpg", UriKind.RelativeOrAbsolute));
+            this.poz_x = 1;
+            this.poz_y = 1;
+            this.jednostkiNawozu=10;
             this.plansza = plansza.ListaPol;
             this.pozycja = plansza.getPole(0, 0);
 		}

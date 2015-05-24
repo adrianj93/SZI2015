@@ -56,8 +56,17 @@
 								</LinearGradientBrush>
 							</Grid.Background>
 						</Grid>
+                        <Canvas x:Name="Board" HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="500 ">
+                            <Image x:Name="Field1" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="Images/1.jpg" Margin="0,0,0,0"/>
 
-						<resources:Board HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5"/>
+                        </Canvas>
+                        <Canvas x:Name="BoardToTraktor" HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="500 ">
+                           
+
+                        </Canvas>
+
+
+                        <!--resources:Board HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5"/-->
 
 					</Grid>
 					
@@ -79,10 +88,14 @@
                             <Label>Pozycja Traktora:</Label>
                             <Label x:Name="TraktorPositionX"></Label>
                             <Label x:Name="TraktorPositionY"></Label>
-                            <Label>Jedź do:</Label>
+                            <Label>Jedz :</Label>
                             <TextBox x:Name="GoToX" Margin="5">x</TextBox>
                             <TextBox x:Name="GoToY" Margin="5">y</TextBox>
-                            <Button x:Name="GoToButt" Content="Jedź!" Click="GoToButt_Click" Margin="5"></Button>
+                            <Button x:Name="GoToButt" Content="Losuj pore dnia i roku" Click="GoToButt_Click" Margin="5"></Button>
+                            <Label x:Name="PoraRokuLabel"> Pora roku:</Label>
+                            <Label x:Name="PoraDniaLabel"> Pora dnia:</Label>
+                            <Label x:Name="NawozLabel">Nawoz:</Label>
+
 
                         </StackPanel>
 					</Grid>
