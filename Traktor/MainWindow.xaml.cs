@@ -32,31 +32,80 @@ namespace Traktor
         //tu ustawiamy wartoscui
         int xOfBoard = 10;
         int yOfBoard = 10;
+        //musi mieć wymiary (xOfBoard + 1) na (yOfBoard + 1)
+        int[,] tablicaTypowPol = new int[11,11];
+
+        int stepCounterHelper = 0;
+        bool needToRefill = false;
 
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        System.Windows.Threading.DispatcherTimer dispatcherTimerMoving = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer dispatcherTimerToHome = new System.Windows.Threading.DispatcherTimer();
 
+        public List<Pole> trasa;
+        public int directionX;
+        public int directionY;
 
 		public MainWindow()
 		{
 			InitializeComponent();
 			
-            PoleCollection plansza = new PoleCollection(10);
+            CreateBoard(xOfBoard, yOfBoard);
+            CreateTablicaTypowPol();
+
+            PoleCollection plansza = new PoleCollection(xOfBoard, yOfBoard, tablicaTypowPol);
             this.traktorek = new Traktor_agent(25, 100, plansza);
             BoardToTraktor.Children.Add(traktorek.image);
 
-            CreateBoard(xOfBoard, yOfBoard);
-
             dispatcherTimer.Tick += dispatcherTimer_Tick;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0,500);
-            dispatcherTimer.Start();
+
+            dispatcherTimerMoving.Tick += dispatcherTimerMoving_Tick;
+            dispatcherTimerMoving.Interval = new TimeSpan(0, 0, 0, 0,500);
+
+            directionX = RandomNumber(1, xOfBoard + 1);
+            directionY = RandomNumber(1, yOfBoard + 1);
+            //trasa = traktorek.AGwiazdka(directionX, directionY);
+
+            //dispatcherTimer.Start();
             changeSeason();
 
             dispatcherTimerToHome.Tick += dispatcherTimerToHome_Tick;
             dispatcherTimerToHome.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            
-            
+
 		}
+        private void CreateTablicaTypowPol()
+        {
+            string typ = string.Empty;
+            for (int i = 1; i <= yOfBoard; i++ )
+            {
+                for (int j = 1; j <= xOfBoard; j++ )
+                {
+                    typ = GetTypeOfField(j, i);
+                    switch (typ)
+                    {
+                        case "ground":
+                            tablicaTypowPol[j, i] = 2;
+                            break;
+                        case "grass":
+                            tablicaTypowPol[j, i] = 3;
+                            break;
+                        case "barn":
+                            tablicaTypowPol[j, i] = 1;
+                            break;
+                        case "weed":
+                            tablicaTypowPol[j, i] = 4;
+                            break;
+                        case "stone":
+                            tablicaTypowPol[j, i] = 1000;
+                            break;
+                        default:
+                            tablicaTypowPol[j, i] = random.Next(1, 6);
+                            break;
+                    }
+                }
+            }
+        }
 
         private static readonly Random random = new Random();
         private static readonly object syncLock = new object();
@@ -68,7 +117,7 @@ namespace Traktor
             }
         }
         //UWAGA indeksuje od 1.
-        string GetTypeOfField(int x, int y)
+        public string GetTypeOfField(int x, int y)
         {
             int noOfElement;
             if (x > xOfBoard || y > yOfBoard || y < 1 || x < 1) return "error";
@@ -114,80 +163,185 @@ namespace Traktor
 
         void MoveTraktor(int x, int y, Traktor_agent traktor)
         {
-            NawozLabel.Content = "Pozostało nawozu: " + traktor.jednostkiNawozu.ToString();
-            if (x > xOfBoard || y > yOfBoard || GetTypeOfField(x,y)=="stone") return;
-            
-            Canvas.SetLeft(traktor.image, (x-1)*50);
-            Canvas.SetTop(traktor.image, (y-1)*50);
-            traktor.poz_x = x;
-            traktor.poz_y = y;
+            if (traktorek.paliwo_poziom <= 0 || traktorek.jednostkiNawozu < 1)
+            {
+                goTo(1, 1, traktorek);
+                needToRefill = true;
+                return;
+            }
+            NawozLabel.Content = "Pozostało nawozu: " + traktorek.jednostkiNawozu.ToString();
+            PaliwoLabel.Content = "Pozostało paliwa: " + traktorek.paliwo_poziom.ToString();
+            //if (x > xOfBoard || y > yOfBoard || GetTypeOfField(x,y)=="stone") return;
+            if (GetTypeOfField(x,y)=="stone") return;
+            //Canvas.SetLeft(traktor.image, (x-1)*50);
+            //Canvas.SetTop(traktor.image, (y-1)*50);
+            //traktor.poz_x = x;
+            //traktor.poz_y = y;
+            Console.WriteLine("Jadę do: x " + directionX.ToString() + " y " + directionY.ToString());
+            goTo(x, y, traktor);
             Console.WriteLine(GetTypeOfField(traktor.poz_x, traktor.poz_y));
             Console.WriteLine(zasiac(PoraRokuLabel.Content.ToString(), PoraDniaLabel.Content.ToString(), GetTypeOfField(traktor.poz_x, traktor.poz_y)));
 
             zasiej(traktorek);
-            if (traktorek.jednostkiNawozu < 1) dispatcherTimerToHome.Start();
+            //if (traktorek.jednostkiNawozu < 1) dispatcherTimerToHome.Start();
 
 
         }
+        public void goTo(int x, int y, Traktor_agent traktor)
+        {
+            //dispatcherTimer.Stop();
+            directionX = x;
+            directionY = y;
 
+            LogJazdy.Content = "Jadę do: x " + x.ToString() + " y " + y.ToString();
+            trasa = traktor.AGwiazdka(x, y);
+            int i = 0;
+            stepCounterHelper = i;
+            while(trasa[i]==traktorek.pozycja && i<trasa.Count-1)
+            {
+                i++;
+                stepCounterHelper = i;
+            }
+            dispatcherTimerMoving.Start();
+        }
+
+        public void goToStep()
+        {
+            if (trasa == null || trasa[stepCounterHelper] == null)
+            {
+                dispatcherTimerMoving.Stop();
+                //dispatcherTimer.Start();
+                return;
+            }
+            if (trasa[stepCounterHelper].kierunekDo == 4)
+            {
+                traktorek.pozycja = traktorek.ALeft(traktorek.pozycja);
+            }
+            else if (trasa[stepCounterHelper].kierunekDo == 6)
+            {
+                traktorek.pozycja = traktorek.ARight(traktorek.pozycja);
+            }
+            else if (trasa[stepCounterHelper].kierunekDo == 8)
+            {
+                traktorek.pozycja = traktorek.AUp(traktorek.pozycja);
+            }
+            else if (trasa[stepCounterHelper].kierunekDo == 2)
+            {
+                traktorek.pozycja = traktorek.ADown(traktorek.pozycja);
+            }
+            else if (trasa[stepCounterHelper].kierunekDo == 0)
+            {
+                //do nothing for now
+            }
+            else
+            {
+                //do nothing for now
+            }
+            traktorek.poz_x = traktorek.pozycja.x;
+            traktorek.poz_y = traktorek.pozycja.y;
+            traktorek.paliwo_poziom -= traktorek.pozycja.koszt;
+            PaliwoLabel.Content = "Pozostało paliwa: " + traktorek.paliwo_poziom.ToString();
+            if (traktorek.paliwo_poziom < 0)
+            {
+                traktorek.paliwo_poziom = 0;
+                PaliwoLabel.Content = "Paliwo: " + traktorek.paliwo_poziom.ToString() + " Jadę na rezerwie!";
+            }
+            stepCounterHelper += 1;
+
+            Canvas.SetLeft(traktorek.image, (traktorek.poz_x - 1) * 50);
+            Canvas.SetTop(traktorek.image, (traktorek.poz_y - 1) * 50);
+
+            if (traktorek.poz_x == directionX && traktorek.poz_y == directionY)
+            {
+                if (needToRefill)
+                {
+                    refill(traktorek);
+                    needToRefill = false;
+                }
+                dispatcherTimerMoving.Stop();
+                //dispatcherTimer.Start();
+            }
+        }
         
+        // Wersja 1. funkcji dispatcherTimer_Tick(object sender, EventArgs e)
+        //private void dispatcherTimer_Tick(object sender, EventArgs e)
+        //{
+        //    //1-prawo, 2-lewo, 3-gora, 4-dol
+        //    int direction = RandomNumber(0, 5);
+        //   // while direction
+        //    /*
+        //    while ((!(direction == 1 && GetTypeOfField(traktorek.poz_x + 1, traktorek.poz_y)=="stone") && 
+        //        (!(direction == 2 && GetTypeOfField(traktorek.poz_x - 1, traktorek.poz_y)=="stone"))&& 
+        //        (!(direction == 3 && GetTypeOfField(traktorek.poz_x, traktorek.poz_y-1)=="stone")) && 
+        //        (!(direction == 4 && GetTypeOfField(traktorek.poz_x + 1, traktorek.poz_y+1)=="stone"))))
+        //    {
+        //        direction = RandomNumber(0, 5);
+
+        //    }
+        //     * */
+        //    if (direction == 1 && traktorek.poz_x < xOfBoard)
+        //    {
+        //        MoveTraktor(traktorek.poz_x + 1, traktorek.poz_y, traktorek);
+        //      //  Console.WriteLine("prawo");
+
+
+        //    }
+        //    else
+        //        if (direction == 2 && traktorek.poz_x > 1)
+        //        {
+        //            MoveTraktor(traktorek.poz_x - 1, traktorek.poz_y, traktorek);
+        //           // Console.WriteLine("lewo");
+
+        //        }
+        //        else
+        //            if (direction == 3 && traktorek.poz_y > 1)
+        //            {
+        //               // Console.WriteLine("gora");
+
+        //                MoveTraktor(traktorek.poz_x, traktorek.poz_y - 1, traktorek);
+
+        //            }
+        //            else
+        //                if (direction == 4 && traktorek.poz_y < yOfBoard)
+        //                {
+        //                    MoveTraktor(traktorek.poz_x, traktorek.poz_y + 1, traktorek);
+        //                    // Console.WriteLine("dol");
+
+        //                }
+        //                else { }
+        //                   // Console.WriteLine("Errrrrror");
+
+        //}
+
+        //Wersja 2 funkcji dispatcherTimer_Tick(object sender, EventArgs e)
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             //1-prawo, 2-lewo, 3-gora, 4-dol
-            int direction = RandomNumber(0, 5);
-           // while direction
-            /*
-            while ((!(direction == 1 && GetTypeOfField(traktorek.poz_x + 1, traktorek.poz_y)=="stone") && 
-                (!(direction == 2 && GetTypeOfField(traktorek.poz_x - 1, traktorek.poz_y)=="stone"))&& 
-                (!(direction == 3 && GetTypeOfField(traktorek.poz_x, traktorek.poz_y-1)=="stone")) && 
-                (!(direction == 4 && GetTypeOfField(traktorek.poz_x + 1, traktorek.poz_y+1)=="stone"))))
-            {
-                direction = RandomNumber(0, 5);
+            directionX = RandomNumber(1, xOfBoard + 1);
+            directionY = RandomNumber(1, yOfBoard + 1);
 
-            }
-             * */
-            if (direction == 1 && traktorek.poz_x < xOfBoard)
-            {
-                MoveTraktor(traktorek.poz_x + 1, traktorek.poz_y, traktorek);
-              //  Console.WriteLine("prawo");
+            MoveTraktor(directionX, directionY, traktorek);
 
-
-            }
-            else
-                if (direction == 2 && traktorek.poz_x > 1)
-                {
-                    MoveTraktor(traktorek.poz_x - 1, traktorek.poz_y, traktorek);
-                   // Console.WriteLine("lewo");
-
-                }
-                else
-                    if (direction == 3 && traktorek.poz_y > 1)
-                    {
-                       // Console.WriteLine("gora");
-
-                        MoveTraktor(traktorek.poz_x, traktorek.poz_y - 1, traktorek);
-
-                    }
-                    else
-                        if (direction == 4 && traktorek.poz_y < yOfBoard)
-                        {
-                            MoveTraktor(traktorek.poz_x, traktorek.poz_y + 1, traktorek);
-                            // Console.WriteLine("dol");
-
-                        }
-                        else { }
-                           // Console.WriteLine("Errrrrror");
-       
+            //for now do nothing
         }
+
+        public void dispatcherTimerMoving_Tick(object sender, EventArgs e)
+        {
+            goToStep();
+            //for now do nothing
+        }
+
         void refill(Traktor_agent traktor)
         {
             traktor.jednostkiNawozu = 10;
+            traktorek.tankuj(traktorek.paliwo_max);
             dispatcherTimerToHome.Stop();
-            dispatcherTimer.Start();
+            //dispatcherTimer.Start();
         }
         private void dispatcherTimerToHome_Tick(object sender, EventArgs e)
         {
-            dispatcherTimer.Stop();
+            //dispatcherTimer.Stop();
             if (traktorek.poz_x != 1 && traktorek.poz_y != 1)
                 MoveTraktor(traktorek.poz_x - 1, traktorek.poz_y - 1, traktorek);
             else
@@ -245,7 +399,7 @@ namespace Traktor
 
                 }
             }
-            //mainBoard[1].Source = new BitmapImage(new Uri(@"\Images\" + (9).ToString() + ".jpg", UriKind.RelativeOrAbsolute));
+            mainBoard[1].Source = new BitmapImage(new Uri(@"\Images\" + (3).ToString() + ".jpg", UriKind.RelativeOrAbsolute));
 
 
         }
@@ -279,11 +433,9 @@ namespace Traktor
             else Console.WriteLine("brakuje nawozu");
         }
 
-        private void GoToButt_Click(object sender, RoutedEventArgs e)
+        private void LosujButt_Click(object sender, RoutedEventArgs e)
         {
-            //Console.WriteLine(zasiac("zima","rano","grass"));
             changeSeason();
-            //this.traktorek.goTo(int.Parse(GoToX.Text), int.Parse(GoToY.Text));
         }
         void changeSeason()
         {
@@ -329,9 +481,13 @@ namespace Traktor
                         case XmlNodeType.Element: // The node is an element.
                            // Console.Write("<" + reader.Name);
 
-                            while (reader.MoveToNextAttribute())
+                            //bezpiecznik bo coś wywala czasem
+                            int bezp = 0;
+                            while (reader.MoveToNextAttribute() && bezp < 100)
                             {// Read the attributes.
                                // Console.Write(" " + reader.Name + "='" + reader.Value + "'");
+                                bezp++;
+
                                 if (reader.Value == pora_dnia)
                                 {
                                     Console.WriteLine("znaleziono dzień!");
@@ -404,6 +560,31 @@ namespace Traktor
             while (bookNodesIterator.MoveNext())
                 sb.Append(string.Format("{0} ", bookNodesIterator.Current.Value));
             return sb.ToString();
+        }
+
+        private void GoToButt_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int tempX = int.Parse(GoToX.Text);
+                int tempY = int.Parse(GoToY.Text);
+                if (tempX > 0 && tempX < 11 && tempY > 0 && tempY < 11)
+                {
+                    directionX = tempX;
+                    directionY = tempY;
+                    LogJazdy.Content = "Jadę";
+                    MoveTraktor(directionX, directionY, traktorek);
+                    LogJazdy.Content = "OK [podaj pole docelowe]";
+                }
+                else
+                {
+                    LogJazdy.Content = "Błędne pole docelowe!";
+                }
+            }
+            catch(FormatException frmatEx)
+            {
+                LogJazdy.Content = "BŁĄD - Wpisz liczby [1-10]";
+            }
         }
   
 

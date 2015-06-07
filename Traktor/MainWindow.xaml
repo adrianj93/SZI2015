@@ -84,17 +84,20 @@
 
 						</Grid>
 						<StackPanel Orientation="Vertical" Height="500">
-							<Label>Poziom paliwa</Label>
+							<!--<Label>Poziom paliwa</Label>
                             <Label>Pozycja Traktora:</Label>
                             <Label x:Name="TraktorPositionX"></Label>
-                            <Label x:Name="TraktorPositionY"></Label>
-                            <Label>Jedz :</Label>
+                            <Label x:Name="TraktorPositionY"></Label>-->
+                            <Label>Jedź do:</Label>
                             <TextBox x:Name="GoToX" Margin="5">x</TextBox>
                             <TextBox x:Name="GoToY" Margin="5">y</TextBox>
-                            <Button x:Name="GoToButt" Content="Losuj pore dnia i roku" Click="GoToButt_Click" Margin="5"></Button>
+                            <Button x:Name="GoToButt" Content="Jedź" Click="GoToButt_Click"  Margin="5"/>
+                            <Label x:Name="LogJazdy" Content="[podaj pole docelowe]" HorizontalAlignment="Center"/>
+                            <Button x:Name="LosujButt" Content="Losuj pore dnia i roku" Click="LosujButt_Click" Margin="5"></Button>
                             <Label x:Name="PoraRokuLabel"> Pora roku:</Label>
                             <Label x:Name="PoraDniaLabel"> Pora dnia:</Label>
                             <Label x:Name="NawozLabel">Nawoz:</Label>
+                            <Label x:Name="PaliwoLabel">Paliwo:</Label>
 
 
                         </StackPanel>
