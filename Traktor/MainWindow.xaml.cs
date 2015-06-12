@@ -37,6 +37,7 @@ namespace Traktor
 
         int stepCounterHelper = 0;
         bool needToRefill = false;
+        int stones = 0;
 
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer dispatcherTimerMoving = new System.Windows.Threading.DispatcherTimer();
@@ -85,7 +86,7 @@ namespace Traktor
                     switch (typ)
                     {
                         case "ground":
-                            tablicaTypowPol[j, i] = 2;
+                            tablicaTypowPol[j, i] = 1;
                             break;
                         case "grass":
                             tablicaTypowPol[j, i] = 3;
@@ -126,16 +127,31 @@ namespace Traktor
                 noOfElement = (y - 1) * xOfBoard + x;
                 //Console.WriteLine(noOfElement);
                 //Console.WriteLine(mainBoard[noOfElement].Source.ToString());
-                if (mainBoard[noOfElement].Source.ToString() =="pack://application:,,,/Images/3.jpg") return "ground";
+
+                if (mainBoard[noOfElement].Source.ToString() == "pack://application:,,,/Images/3.jpg" || mainBoard[noOfElement].Source.ToString() == "\\Images\\3.jpg")
+                {
+                    return "ground";
+                }
+                else if (mainBoard[noOfElement].Source.ToString() == "pack://application:,,,/Images/2.jpg" || mainBoard[noOfElement].Source.ToString() == "\\Images\\2.jpg")
+                {
+                    return "grass";
+                }
+                else if (mainBoard[noOfElement].Source.ToString() == "pack://application:,,,/Images/1.jpg" || mainBoard[noOfElement].Source.ToString() == "\\Images\\1.jpg")
+                {
+                    return "stone";
+                }
+                else if (mainBoard[noOfElement].Source.ToString() == "pack://application:,,,/Images/4.jpg" || mainBoard[noOfElement].Source.ToString() == "\\Images\\4.jpg")
+                {
+                    return "weed";
+                }
+                else if (mainBoard[noOfElement].Source.ToString() == "pack://application:,,,/Images/9.jpg" || mainBoard[noOfElement].Source.ToString() == "\\Images\\9.jpg")
+                {
+                    return "barn";
+                }
                 else
-                    if (mainBoard[noOfElement].Source.ToString() == "pack://application:,,,/Images/2.jpg") return "grass";
-                    else
-                        if (mainBoard[noOfElement].Source.ToString() == "pack://application:,,,/Images/1.jpg") return "stone";
-                        else
-                            if (mainBoard[noOfElement].Source.ToString() == "pack://application:,,,/Images/4.jpg") return "weed";
-                            else
-                                if (mainBoard[noOfElement].Source.ToString() == "pack://application:,,,/Images/9.jpg") return "barn";
-                            else return "error";
+                {
+                    return "error";
+                }
             }
 
         }
@@ -163,6 +179,10 @@ namespace Traktor
 
         void MoveTraktor(int x, int y, Traktor_agent traktor)
         {
+            if (x == traktorek.pozycja.x && y == traktorek.pozycja.y)
+            {
+                return;
+            }
             if (traktorek.paliwo_poziom <= 0 || traktorek.jednostkiNawozu < 1)
             {
                 goTo(1, 1, traktorek);
@@ -370,9 +390,12 @@ namespace Traktor
                         Image k = new Image();
                         //nie chce zeby tworzyly sie sciezki bez wyjscia
                         
-                        if (howManyStoneAroudField(xi+1, yi+1) > 1)
+                        if (stones < 8 && xi!=0 && xi!=x-1 && yi!=0 && yi!=y-1)
                         {
-                            k.Source = new BitmapImage(new Uri(@"\Images\" + RandomNumber(2, 4).ToString() + ".jpg", UriKind.RelativeOrAbsolute));
+                            int randomowa = RandomNumber(1, 5);
+                            if (randomowa == 1)
+                                stones++;
+                            k.Source = new BitmapImage(new Uri(@"\Images\" + randomowa.ToString() + ".jpg", UriKind.RelativeOrAbsolute));
                         }
 
                         else
@@ -390,7 +413,7 @@ namespace Traktor
                         Canvas.SetTop(mainBoard[mainBoard.Count - 1], pomY);
                         pomX = pomX + 50;
                         Console.WriteLine(mainBoard[xi].Source.ToString());
-                        Console.WriteLine("Kamieni:" + howManyStoneAroudField(xi+1, yi+1).ToString());
+                        //Console.WriteLine("Kamieni:" + howManyStoneAroudField(xi+1, yi+1).ToString());
                         Console.WriteLine("---------------------");
 
                     }
@@ -581,7 +604,7 @@ namespace Traktor
                     LogJazdy.Content = "Błędne pole docelowe!";
                 }
             }
-            catch(FormatException frmatEx)
+            catch(FormatException formatEx)
             {
                 LogJazdy.Content = "BŁĄD - Wpisz liczby [1-10]";
             }

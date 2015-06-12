@@ -93,25 +93,21 @@ namespace Traktor
                 if (ALeft(PoleX) != null)
                 {
                     PoleTemp = ALeft(PoleX);
-                    //PoleTemp.kierunekDo = 4;
                     xNeighbor.Add(PoleTemp);
                 }
                 if (ARight(PoleX) != null)
                 {
                     PoleTemp = ARight(PoleX);
-                    //PoleTemp.kierunekDo = 6;
                     xNeighbor.Add(PoleTemp);
                 }
                 if (AUp(PoleX) != null)
                 {
                     PoleTemp = AUp(PoleX);
-                    //PoleTemp.kierunekDo = 8;
                     xNeighbor.Add(PoleTemp);
                 }
                 if (ADown(PoleX) != null)
                 {
                     PoleTemp = ADown(PoleX);
-                    //PoleTemp.kierunekDo = 2;
                     xNeighbor.Add(PoleTemp);
                 }
                 foreach (var p in xNeighbor)

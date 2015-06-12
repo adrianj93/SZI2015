@@ -1,1 +1,72 @@
-﻿
+﻿Log Trasy traktora:
+Pozycja startowa x:1 y:1
+Pozycja docelowa x:4 y:4
+wschód Pozycja x:2 y:1 Koszt: 4
+wschód Pozycja x:3 y:1 Koszt: 3
+południe Pozycja x:3 y:2 Koszt: 1
+południe Pozycja x:3 y:3 Koszt: 1
+południe Pozycja x:3 y:4 Koszt: 1
+wschód Pozycja x:4 y:4 Koszt: 1
+Koniec trasy -> Osiągnięto pozycję końcową(?)
+***
+Log Trasy traktora:
+Pozycja startowa x:4 y:4
+Pozycja docelowa x:4 y:2
+północ Pozycja x:4 y:3 Koszt: 4
+północ Pozycja x:4 y:2 Koszt: 1
+Koniec trasy -> Osiągnięto pozycję końcową(?)
+***
+Log Trasy traktora:
+Pozycja startowa x:4 y:2
+Pozycja docelowa x:8 y:7
+wschód Pozycja x:5 y:2 Koszt: 4
+południe Pozycja x:5 y:3 Koszt: 1
+południe Pozycja x:5 y:4 Koszt: 4
+południe Pozycja x:5 y:5 Koszt: 1
+południe Pozycja x:5 y:6 Koszt: 3
+południe Pozycja x:5 y:7 Koszt: 3
+wschód Pozycja x:6 y:7 Koszt: 3
+wschód Pozycja x:7 y:7 Koszt: 1
+wschód Pozycja x:8 y:7 Koszt: 4
+Koniec trasy -> Osiągnięto pozycję końcową(?)
+***
+Log Trasy traktora:
+Pozycja startowa x:8 y:7
+Pozycja docelowa x:1 y:1
+zachód Pozycja x:7 y:7 Koszt: 1
+zachód Pozycja x:6 y:7 Koszt: 3
+zachód Pozycja x:5 y:7 Koszt: 3
+północ Pozycja x:5 y:6 Koszt: 3
+północ Pozycja x:5 y:5 Koszt: 1
+północ Pozycja x:5 y:4 Koszt: 4
+zachód Pozycja x:4 y:4 Koszt: 1
+zachód Pozycja x:3 y:4 Koszt: 1
+zachód Pozycja x:2 y:4 Koszt: 1
+północ Pozycja x:2 y:3 Koszt: 1
+zachód Pozycja x:1 y:3 Koszt: 3
+północ Pozycja x:1 y:2 Koszt: 4
+północ Pozycja x:1 y:1 Koszt: 1
+Koniec trasy -> Osiągnięto pozycję końcową(?)
+***
+Log Trasy traktora:
+Pozycja startowa x:1 y:1
+Pozycja docelowa x:5 y:5
+wschód Pozycja x:2 y:1 Koszt: 4
+wschód Pozycja x:3 y:1 Koszt: 3
+południe Pozycja x:3 y:2 Koszt: 1
+południe Pozycja x:3 y:3 Koszt: 1
+południe Pozycja x:3 y:4 Koszt: 1
+wschód Pozycja x:4 y:4 Koszt: 1
+wschód Pozycja x:5 y:4 Koszt: 4
+południe Pozycja x:5 y:5 Koszt: 1
+Koniec trasy -> Osiągnięto pozycję końcową(?)
+***
+Log Trasy traktora:
+Pozycja startowa x:5 y:5
+Pozycja docelowa x:3 y:5
+północ Pozycja x:5 y:4 Koszt: 4
+zachód Pozycja x:4 y:4 Koszt: 1
+zachód Pozycja x:3 y:4 Koszt: 1
+południe Pozycja x:3 y:5 Koszt: 1
+Koniec trasy -> Osiągnięto pozycję końcową(?)
+***

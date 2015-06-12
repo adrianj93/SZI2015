@@ -30,7 +30,7 @@ namespace Traktor
         {
             Pole wynik;
             if (this.ListaPol.Exists(p => p.x == x && p.y == y))
-                wynik = this.ListaPol.Find(p => p.x == x & p.y == y);
+                wynik = this.ListaPol.Find(p => p.x == x && p.y == y);
             else
                 wynik = null;
             return wynik;
